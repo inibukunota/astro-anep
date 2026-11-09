@@ -6,7 +6,7 @@ const branch =
   process.env.GITHUB_HEAD_REF ||
   process.env.GITHUB_BRANCH ||
   process.env.HEAD ||
-  "main";
+  "design/homepage-schema";
 
 export default defineConfig({
   branch,
