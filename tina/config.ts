@@ -18,6 +18,22 @@ export default defineConfig({
     publicFolder: "public",
   },
 
+  search: {
+    tina: {
+      indexerToken: process.env.TINA_SEARCH_TOKEN || "",
+      stopwordLanguages: ["eng"],
+      fuzzyEnabled: true,
+      fuzzyOptions: {
+        maxDistance: 2,
+        minSimilarity: 0.6,
+        maxTermExpansions: 10,
+        useTranspositions: true,
+      },
+    },
+    indexBatchSize: 100,
+    maxSearchIndexFieldLength: 100,
+  },
+
   schema: {
     collections: [
       {
