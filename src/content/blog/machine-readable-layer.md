@@ -1,8 +1,8 @@
 ---
 title: "Adding a Machine-Readable Layer"
 description: "How BUKUNOTA added llms.txt and an AI catalog so machine readers and AI agents can discover the site's resources more easily."
-pubDate: 2026-11-09
-updatedDate: 2026-11-09
+pubDate: 2026-11-09T11:00:00+08:00
+updatedDate: 2026-11-09T11:30:00+08:00
 ---
 
 PageSpeed Insights flagged two new issues on BUKUNOTA: the site did not have a properly structured `llms.txt` file, and its `ai-catalog.json` endpoint was returning HTML instead of a valid JSON manifest.
