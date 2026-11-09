@@ -2,45 +2,43 @@
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 ---
-
 <header>
-	<nav aria-label="Primary navigation">
-		<a class="brand" href="/">{SITE_TITLE}</a>
-		<div class="internal-links">
-			<HeaderLink href="/blog">Notes</HeaderLink>
-			<HeaderLink href="/about">About</HeaderLink>
-		</div>
-	</nav>
+  <nav aria-label="Primary navigation">
+    <a class="brand" href="/">{SITE_TITLE}</a>
+    <div class="internal-links">
+      <HeaderLink href="/blog">Blog</HeaderLink>
+      <HeaderLink href="/about">About</HeaderLink>
+    </div>
+  </nav>
 </header>
-
 <style>
-	header {
-		padding: 1.25rem 1rem;
-		border-bottom: 1px solid rgb(var(--gray-light));
-		background: rgb(var(--background));
-	}
-	nav {
-		width: min(100%, var(--site-width));
-		margin: 0 auto;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-	.brand,
-	.internal-links a {
-		color: rgb(var(--black));
-		text-decoration: none;
-	}
-	.brand {
-		font-weight: 700;
-		letter-spacing: 0.02em;
-	}
-	.internal-links {
-		display: flex;
-		gap: 1.25rem;
-	}
-	.internal-links a:hover,
-	.internal-links a.active {
-		color: var(--accent);
-	}
+header {
+  padding: 1.25rem 1rem;
+  border-bottom: 1px solid rgb(var(--gray-light));
+  background: rgb(var(--background));
+}
+nav {
+  width: min(100%, var(--site-width));
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.brand,
+.internal-links a {
+  color: rgb(var(--black));
+  text-decoration: none;
+}
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.internal-links {
+  display: flex;
+  gap: 1.25rem;
+}
+.internal-links a:hover,
+.internal-links a.active {
+  color: var(--accent);
+}
 </style>
