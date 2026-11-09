@@ -25,13 +25,6 @@ export default defineConfig({
         name: "blog",
         path: "src/content/blog",
         format: "md",
-        ui: {
-          router: ({ document }) =>
-            `/blog/${document._sys.filename}`,
-          filename: {
-            readonly: true,
-          },
-        },
         fields: [
           {
             type: "string",
@@ -51,19 +44,15 @@ export default defineConfig({
             label: "Publication date",
             name: "pubDate",
             required: true,
-            ui: {
-              dateFormat: "MMMM DD YYYY",
-              timeFormat: "hh:mm A",
-            },
+            dateFormat: "MMMM DD YYYY",
+            timeFormat: "hh:mm A",
           },
           {
             type: "datetime",
             label: "Updated date",
             name: "updatedDate",
-            ui: {
-              dateFormat: "MMMM DD YYYY",
-              timeFormat: "hh:mm A",
-            },
+            dateFormat: "MMMM DD YYYY",
+            timeFormat: "hh:mm A",
           },
           {
             type: "string",
@@ -76,9 +65,6 @@ export default defineConfig({
             label: "Content",
             name: "body",
             isBody: true,
-            parser: {
-              type: "markdown",
-            },
           },
         ],
       },
