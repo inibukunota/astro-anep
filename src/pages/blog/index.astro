@@ -7,7 +7,7 @@ import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE } from '../../consts';
 import { getCollection } from 'astro:content';
 
-const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime());
 const items = posts.map((post) => ({
 	title: post.data.title,
 	url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
