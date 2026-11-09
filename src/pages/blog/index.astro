@@ -2,110 +2,48 @@
 import BaseHead from '../../components/BaseHead.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import StructuredData from '../../components/StructuredData.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
-
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+<head>
+	<BaseHead title={`Notes · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+	<StructuredData type="collection" title="Notes" description={SITE_DESCRIPTION} url={Astro.url} />
+</head>
+<body>
+	<Header />
+	<main>
+		<header class="page-header">
+			<p class="eyebrow">Writing</p>
+			<h1>Notes</h1>
+			<p>Things I've written about technology, the web, SEO, experiments and whatever catches my attention.</p>
+		</header>
+		<section aria-label="All notes">
+			<ol class="post-list">
+				{posts.map((post) => (
+					<li><a href={`/blog/${post.id}/`}><span class="post-content"><strong>{post.data.title}</strong><span>{post.data.description}</span><time datetime={post.data.pubDate.toISOString()}><FormattedDate date={post.data.pubDate} /></time></span></a></li>
+				))}
+			</ol>
+		</section>
+	</main>
+	<Footer />
+</body>
 </html>
+<style>
+.page-header { max-width: 680px; margin-bottom: 4rem; }
+.eyebrow { margin-bottom: .5rem; color: rgb(var(--gray)); }
+.page-header h1 { margin-bottom: 1rem; }
+.page-header > p:last-child { color: rgb(var(--gray-dark)); }
+.post-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgb(var(--gray-light)); }
+.post-list li { border-bottom: 1px solid rgb(var(--gray-light)); }
+.post-list a { display: block; padding: 1.5rem 0; color: inherit; text-decoration: none; }
+.post-list a:hover strong { color: var(--accent); }
+.post-content { display: grid; gap: .3rem; }
+.post-content strong { font-size: 1.2rem; color: rgb(var(--black)); }
+.post-content span { color: rgb(var(--gray-dark)); }
+time { color: rgb(var(--gray)); font-size: .85rem; }
+</style>

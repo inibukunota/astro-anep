@@ -1,0 +1,49 @@
+---
+interface Props {
+	type: 'website' | 'profile' | 'collection' | 'article';
+	title: string;
+	description: string;
+	url: URL;
+	image?: string;
+	datePublished?: Date;
+	dateModified?: Date;
+}
+const { type, title, description, url, image, datePublished, dateModified } = Astro.props;
+const siteUrl = Astro.site ?? url;
+const personId = new URL('/#person', siteUrl).toString();
+const websiteId = new URL('/#website', siteUrl).toString();
+const pageId = new URL(`${url.pathname}#webpage`, siteUrl).toString();
+const imageUrl = image ? new URL(image, url).toString() : undefined;
+const person = { '@type': 'Person', '@id': personId, name: 'Hanif Azrai', url: siteUrl.toString() };
+const website = { '@type': 'WebSite', '@id': websiteId, url: siteUrl.toString(), name: 'Hanif Azrai', description: 'Hanif Azrai writes about technology, content, SEO, the web, and things he finds interesting.', publisher: { '@id': personId } };
+const webPage = { '@type': type === 'profile' ? 'ProfilePage' : type === 'collection' ? 'CollectionPage' : 'WebPage', '@id': pageId, url: url.toString(), name: title, description, isPartOf: { '@id': websiteId } };
+const graph: Record<string, unknown>[] = [person, website, webPage];
+if (type === 'article') {
+	graph.push({
+		'@type': 'BreadcrumbList',
+		'@id': `${url.toString()}#breadcrumb`,
+		itemListElement: [
+			{ '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl.toString() },
+			{ '@type': 'ListItem', position: 2, name: 'Notes', item: new URL('/blog/', siteUrl).toString() },
+			{ '@type': 'ListItem', position: 3, name: title, item: url.toString() },
+		],
+	});
+	graph.push({
+		'@type': 'BlogPosting',
+		'@id': `${url.toString()}#article`,
+		headline: title,
+		description,
+		url: url.toString(),
+		mainEntityOfPage: { '@id': pageId },
+		author: { '@id': personId },
+		publisher: { '@id': personId },
+		datePublished: datePublished?.toISOString(),
+		dateModified: (dateModified ?? datePublished)?.toISOString(),
+		...(imageUrl ? { image: [imageUrl] } : {}),
+	});
+}
+if (type === 'collection') {
+	graph.push({ '@type': 'ItemList', '@id': `${url.toString()}#itemlist` });
+}
+---
+<script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
