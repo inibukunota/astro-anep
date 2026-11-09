@@ -7,6 +7,11 @@ import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 5);
+const items = posts.map((post) => ({
+	title: post.data.title,
+	url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
+	description: post.data.description,
+}));
 ---
 <!doctype html>
 <html lang="en">
@@ -25,7 +30,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 		<section class="latest" aria-labelledby="latest-title">
 			<div class="section-heading">
 				<h2 id="latest-title">Latest</h2>
-				<a href="/blog/">View all notes →</a>
+				<a href="/blog/">View all blog posts →</a>
 			</div>
 			<ol>
 				{posts.map((post, index) => (
