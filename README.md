@@ -1,64 +1,174 @@
-# Astro Starter Kit: Blog
+# bukunota.my
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/astro-blog-starter-template)
+Personal website, writing platform, and technical sandbox for **bukunota.my**.
 
-![Astro Template Preview](https://github.com/withastro/astro/assets/2244813/ff10799f-a816-4703-b967-c78997e8323d)
+The project is built to keep the publishing workflow simple and cloud-based:
 
-<!-- dash-content-start -->
+**TinaCMS → GitHub → Cloudflare → bukunota.my**
 
-Create a blog with Astro and deploy it on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
+## Stack
 
-Features:
+- **Astro** — website framework
+- **Markdown / MDX** — content
+- **TinaCMS** — web-based content management
+- **TinaCloud** — CMS schema and branch integration
+- **GitHub** — source code and content
+- **Cloudflare** — production hosting and deployment
+- **TypeScript** — project tooling
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-- ✅ Built-in Observability logging
+Production site: **https://bukunota.my**
 
-<!-- dash-content-end -->
+Repository: **https://github.com/inibukunota/astro-anep**
 
-## Getting Started
+## Project structure
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+- `src/pages/` — site routes
+- `src/components/` — reusable Astro components
+- `src/layouts/` — page layouts
+- `src/content/blog/` — Markdown/MDX articles
+- `src/content.config.ts` — Astro content schema
+- `tina/config.ts` — TinaCMS schema and configuration
+- `tina/tina-lock.json` — generated TinaCMS schema lock file
+- `public/` — static assets
+- `.github/workflows/` — GitHub Actions automation
 
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/astro-blog-starter-template
-```
+## Content management
 
-A live public deployment of this template is available at [https://astro-blog-starter-template.templates.workers.dev](https://astro-blog-starter-template.templates.workers.dev)
+TinaCMS is available at:
 
-## 🚀 Project Structure
+**https://bukunota.my/admin**
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+The current `blog` collection supports:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Title
+- Description
+- Publication date
+- Updated date
+- Hero image
+- Rich-text article body
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+TinaCMS writes content back to the GitHub repository, where Cloudflare can build and deploy the updated site.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Development history
 
-## 🧞 Commands
+### 9 November 2026 — TinaCMS integration completed
 
-All commands are run from the root of the project, from a terminal:
+The initial development phase focused on turning the Astro site into a manageable cloud-based publishing platform.
 
-| Command                           | Action                                           |
-| :-------------------------------- | :----------------------------------------------- |
-| `npm install`                     | Installs dependencies                            |
-| `npm run dev`                     | Starts local dev server at `localhost:4321`      |
-| `npm run build`                   | Build your production site to `./dist/`          |
-| `npm run preview`                 | Preview your build locally, before deploying     |
-| `npm run astro ...`               | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help`         | Get help using the Astro CLI                     |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare        |
-| `npm wrangler tail`               | View real-time logs for all Workers              |
+#### Completed
 
-## 👀 Want to learn more?
+- Established the Astro website and GitHub repository.
+- Connected the production site to Cloudflare.
+- Connected the project to the `bukunota.my` domain.
+- Installed and configured TinaCMS.
+- Created a TinaCMS `blog` collection.
+- Configured the TinaCMS schema for article metadata and rich-text content.
+- Configured the production branch around `main`.
+- Added the required TinaCMS environment variables to the Cloudflare deployment.
+- Investigated and resolved the TinaCloud branch indexing problem.
+- Identified that `tina/tina-lock.json` was required for TinaCloud to detect the schema and index the repository.
+- Added GitHub Actions automation to generate and commit the Tina lock file.
+- Verified that `tina/tina-lock.json` was successfully generated and committed to `main`.
+- Verified that the TinaCMS admin interface is working.
+- Verified that content can now be inserted through TinaCMS.
+- Removed obsolete CMS/Tina placeholder files and duplicate lockfile workflows during repository housekeeping.
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Current milestone
 
-## Credit
+**TinaCMS is operational.**
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+The remaining end-to-end verification is to confirm the full publishing path:
+
+**TinaCMS → GitHub commit → Cloudflare build → live article on bukunota.my**
+
+## Planned next phases
+
+### 1. Publishing workflow verification
+
+Create a real test article in TinaCMS and confirm that it reaches GitHub, triggers the Cloudflare deployment, and appears correctly on the live website.
+
+### 2. Website layout
+
+Finalise a consistent layout across the site:
+
+- 1000px overall page width
+- Approximately 720px reading width
+- Header and navigation
+- Homepage
+- Article pages
+- Responsive behaviour
+- Typography and spacing
+
+### 3. Content structure
+
+Consider adding:
+
+- Categories
+- Tags
+- Author information
+- Featured images
+- Related articles
+- Publication and updated dates
+
+### 4. SEO and technical metadata
+
+Review and implement:
+
+- Page titles
+- Meta descriptions
+- Canonical URLs
+- Open Graph metadata
+- Social metadata
+- Sitemap
+- Robots.txt
+- RSS
+- Internal linking
+- Crawlability and indexability
+
+### 5. Structured data
+
+Implement appropriate Schema.org structured data, including where relevant:
+
+- `WebSite`
+- `Person` or `Organization`
+- `Blog`
+- `BlogPosting` / `Article`
+- `BreadcrumbList`
+
+### 6. Performance
+
+Review:
+
+- Core Web Vitals
+- Image optimisation
+- HTML structure
+- Mobile performance
+- Cloudflare deployment configuration
+
+### 7. Editorial workflow
+
+Build a repeatable workflow:
+
+**Research → Write → Edit → Publish → Index → Measure → Optimise**
+
+## Repository housekeeping notes
+
+The repository previously contained temporary files and duplicate GitHub Actions workflows created while troubleshooting TinaCMS and package lockfiles. These were cleaned up on **9 November 2026**.
+
+The active TinaCMS automation is now:
+
+`.github/workflows/generate-tina-lock.yml`
+
+The generated:
+
+`tina/tina-lock.json`
+
+is intentionally committed to the repository because TinaCloud requires it for schema and branch indexing.
+
+## Status
+
+**Phase 1: Foundation + CMS — COMPLETE**
+
+**Phase 2: Publishing verification — NEXT**
+
+**Phase 3: Layout + SEO + structured data — PLANNED**
