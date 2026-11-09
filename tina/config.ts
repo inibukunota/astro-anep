@@ -1,0 +1,84 @@
+import { defineConfig } from "tinacms";
+
+const branch =
+  process.env.GITHUB_BRANCH ||
+  process.env.HEAD ||
+  "main";
+
+export default defineConfig({
+  branch,
+  clientId: process.env.TINA_CLIENT_ID || null,
+  token: process.env.TINA_TOKEN || null,
+
+  build: {
+    outputFolder: "admin",
+    publicFolder: "public",
+  },
+
+  schema: {
+    collections: [
+      {
+        label: "Notes",
+        name: "blog",
+        path: "src/content/blog",
+        format: "md",
+        ui: {
+          router: ({ document }) =>
+            `/blog/${document._sys.filename}`,
+          filename: {
+            readonly: true,
+          },
+        },
+        fields: [
+          {
+            type: "string",
+            label: "Title",
+            name: "title",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "string",
+            label: "Description",
+            name: "description",
+            required: true,
+          },
+          {
+            type: "datetime",
+            label: "Publication date",
+            name: "pubDate",
+            required: true,
+            ui: {
+              dateFormat: "MMMM DD YYYY",
+              timeFormat: "hh:mm A",
+            },
+          },
+          {
+            type: "datetime",
+            label: "Updated date",
+            name: "updatedDate",
+            ui: {
+              dateFormat: "MMMM DD YYYY",
+              timeFormat: "hh:mm A",
+            },
+          },
+          {
+            type: "string",
+            label: "Hero image",
+            name: "heroImage",
+            description: "Path or URL for the article hero image.",
+          },
+          {
+            type: "rich-text",
+            label: "Content",
+            name: "body",
+            isBody: true,
+            parser: {
+              type: "markdown",
+            },
+          },
+        ],
+      },
+    ],
+  },
+});
