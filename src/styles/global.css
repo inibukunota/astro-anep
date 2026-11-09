@@ -26,7 +26,7 @@ body {
 main {
 	width: min(var(--site-width), calc(100% - 2rem));
 	margin: 0 auto;
-	padding: 4rem 0 5rem;
+	padding: 1rem 0 2rem;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -44,7 +44,7 @@ h3 { font-size: 1.5rem; }
 
 a { color: inherit; text-underline-offset: .18em; }
 a:hover { color: var(--text); }
-p { margin: 0 0 1.25rem; }
+p { margin: 0 0 1rem; }
 img { max-width: 100%; height: auto; }
 
 hr {
@@ -54,14 +54,14 @@ hr {
 }
 
 .prose { max-width: var(--reading-width); }
-.prose p { margin-bottom: 1.5em; }
-.prose img { display: block; margin: 2rem auto; }
-.prose h2,.prose h3,.prose h4 { margin-top: 2.5rem; }
+.prose p { margin-bottom: 1rem; }
+.prose img { display: block; margin: 1rem auto; }
+.prose h2,.prose h3,.prose h4 { margin-top: 1rem; }
 .prose a { text-decoration-thickness: 1px; }
 
 .prose blockquote {
-	margin: 2rem 0;
-	padding-left: 1.25rem;
+	margin: 1rem 0;
+	padding-left: 1rem;
 	border-left: 2px solid var(--text);
 	font-family: var(--serif);
 	font-size: 1.15em;
@@ -73,7 +73,7 @@ code {
 }
 
 pre {
-	padding: 1.25rem;
+	padding: 1rem;
 	overflow-x: auto;
 	background: rgba(20,18,4,.05);
 }
@@ -99,6 +99,6 @@ pre {
 	body { font-size: 16px; }
 	main {
 		width: min(var(--site-width), calc(100% - 1.5rem));
-		padding: 3rem 0 4rem;
+		padding: 1rem 0 2rem;
 	}
 }
