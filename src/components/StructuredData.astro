@@ -53,16 +53,6 @@ const webPage = {
 
 const graph: Record<string, unknown>[] = [person, website, webPage];
 
-if (type === 'website') {
-  graph.push({
-    '@type': 'WebSite',
-    '@id': `${url.toString()}#site`,
-    url: url.toString(),
-    name: title,
-    description,
-    publisher: { '@id': personId },
-  });
-}
 
 if (type === 'profile' || type === 'page' || type === 'collection' || type === 'article') {
   graph.push({
