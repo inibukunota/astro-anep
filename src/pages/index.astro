@@ -6,7 +6,11 @@ import StructuredData from '../components/StructuredData.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 5);
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 5);
+
 const items = posts.map((post) => ({
 	title: post.data.title,
 	url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
@@ -22,21 +26,15 @@ const items = posts.map((post) => ({
 <body>
 	<Header />
 	<main>
-		<section class="intro" aria-labelledby="intro-title">
-			<p class="eyebrow">Hi, I'm Hanif.</p>
-			<h1 id="intro-title">I write, build and figure things out.</h1>
-			<p class="intro-copy">I work with content, SEO and technology. This is where I write about the web, things I'm building, and whatever else catches my attention.</p>
-		</section>
-		<section class="latest" aria-labelledby="latest-title">
+		<section aria-labelledby="latest-title">
 			<div class="section-heading">
-				<h2 id="latest-title">Latest</h2>
-				<a href="/blog/">View all blog posts →</a>
+				<h1 id="latest-title">Latest</h1>
+				<a href="/blog/">View all</a>
 			</div>
-			<ol>
-				{posts.map((post, index) => (
+			<ol class="post-list">
+				{posts.map((post) => (
 					<li>
 						<a href={`/blog/${post.id}/`}>
-							<span class="number">{String(index + 1).padStart(2, '0')}</span>
 							<span class="post-content">
 								<strong>{post.data.title}</strong>
 								<span>{post.data.description}</span>
@@ -52,27 +50,52 @@ const items = posts.map((post) => ({
 </body>
 </html>
 <style>
-.intro { max-width: 720px; margin-bottom: 7rem; }
-.eyebrow { margin-bottom: 1rem; color: rgb(var(--gray)); }
-.intro h1 { margin-bottom: 1.5rem; }
-.intro-copy { max-width: 620px; font-size: 1.2rem; color: rgb(var(--gray-dark)); }
-.latest { max-width: 800px; }
-.section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-.section-heading h2 { font-size: 1.5rem; }
-.section-heading a { font-size: .9rem; text-decoration: none; }
-ol { margin: 0; padding: 0; list-style: none; border-top: 1px solid rgb(var(--gray-light)); }
-li { border-bottom: 1px solid rgb(var(--gray-light)); }
-li a { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding: 1.25rem 0; color: inherit; text-decoration: none; }
-li a:hover strong { color: var(--accent); }
-.number { color: rgb(var(--gray)); font-variant-numeric: tabular-nums; }
-.post-content { display: grid; gap: .25rem; }
-.post-content strong { font-size: 1.1rem; color: rgb(var(--black)); }
-.post-content span { color: rgb(var(--gray-dark)); }
-time { margin-top: .25rem; color: rgb(var(--gray)); font-size: .85rem; }
-@media (max-width: 600px) {
-	.intro { margin-bottom: 4rem; }
-	.intro-copy { font-size: 1.05rem; }
-	.section-heading { align-items: flex-start; flex-direction: column; gap: .25rem; }
-	li a { grid-template-columns: 2.25rem 1fr; gap: .5rem; }
+section { max-width: 800px; }
+.section-heading {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
+.section-heading h1 {
+	font-size: 1.15rem;
+	font-family: var(--sans);
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+}
+.section-heading a { font-size: .85rem; text-decoration: none; }
+.post-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	border-top: 1px solid var(--rule);
+}
+.post-list li { border-bottom: 1px solid var(--rule); }
+.post-list a {
+	display: block;
+	padding: 1.4rem 0;
+	color: inherit;
+	text-decoration: none;
+}
+.post-content { display: grid; gap: .3rem; }
+.post-content strong {
+	color: var(--text);
+	font-family: var(--serif);
+	font-size: clamp(1.35rem, 2.5vw, 1.8rem);
+	line-height: 1.15;
+}
+.post-content span { max-width: 680px; color: var(--muted); }
+time {
+	color: var(--muted);
+	font-size: .78rem;
+	letter-spacing: .04em;
+	text-transform: uppercase;
+}
+.post-list a:hover strong {
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: .12em;
 }
 </style>
