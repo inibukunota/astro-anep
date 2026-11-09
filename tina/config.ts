@@ -2,6 +2,8 @@ import { defineConfig } from "tinacms";
 
 const branch =
   process.env.CF_PAGES_BRANCH ||
+  process.env.GITHUB_REF_NAME ||
+  process.env.GITHUB_HEAD_REF ||
   process.env.GITHUB_BRANCH ||
   process.env.HEAD ||
   "main";
