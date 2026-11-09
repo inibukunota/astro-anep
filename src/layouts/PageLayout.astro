@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StructuredData from '../components/StructuredData.astro';
+
+type Props = CollectionEntry<'pages'>['data'];
+const { title, description, seoTitle, seoDescription, noIndex } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <BaseHead title={seoTitle || title} description={seoDescription || description} noIndex={noIndex} />
+  <StructuredData type={title.toLowerCase() === 'about' ? 'profile' : 'page'} title={title} description={description} url={Astro.url} />
+</head>
+<body>
+  <Header />
+  <main>
+    <article class="page">
+      <header class="page-header">
+        <h1>{title}</h1>
+        {description && <p class="description">{description}</p>}
+      </header>
+      <div class="prose"><slot /></div>
+    </article>
+  </main>
+  <Footer />
+</body>
+</html>
+<style>
+.page { max-width: var(--reading-width); }
+.page-header { margin-bottom: 3rem; }
+.description { margin-top: 1rem; font-size: 1.15rem; color: rgb(var(--gray)); }
+.prose { max-width: var(--reading-width); }
+</style>
