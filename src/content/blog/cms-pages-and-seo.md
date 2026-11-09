@@ -1,8 +1,8 @@
 ---
 title: "CMS, Pages and SEO"
 description: "Expanding the site with a cleaner CMS structure, standalone pages, SEO controls and connected structured data."
-pubDate: 2026-11-09
-updatedDate: 2026-11-09
+pubDate: 2026-11-09T10:00:00+08:00
+updatedDate: 2026-11-09T10:30:00+08:00
 ---
 
 The site structure was expanded beyond the initial TinaCMS blog setup.
