@@ -30,6 +30,13 @@ const imageURL = new URL(image, Astro.url);
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <title>{title}</title>
 
+<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-NZ7HNK8D"></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){window.dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>
+
 <meta property="og:locale" content="en_MY" />
 <meta property="og:site_name" content="Hanif Azrai" />
 <meta property="og:type" content={type} />
