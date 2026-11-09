@@ -1,0 +1,14 @@
+# BUKUNOTA
+
+> Notes from a personal laboratory about technology, the web, SEO, experiments and things worth figuring out.
+
+## Pages
+
+- [Home](https://bukunota.my/)
+- [Blog](https://bukunota.my/blog/)
+- [About](https://bukunota.my/about/)
+
+## Content
+
+- [RSS feed](https://bukunota.my/rss.xml)
+- [Sitemap](https://bukunota.my/sitemap-index.xml)
