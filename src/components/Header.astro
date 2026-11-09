@@ -18,13 +18,13 @@ import { SITE_TITLE, SITE_TAGLINE } from '../consts';
 	</div>
 </header>
 <style>
-header { padding: 2rem 1rem 0; background: var(--background); }
+header { padding: 1rem 1rem 0; background: var(--background); }
 .masthead { width: min(100%, var(--site-width)); margin: 0 auto; }
 .masthead-top {
 	display: flex;
 	align-items: flex-end;
 	justify-content: space-between;
-	gap: 2rem;
+	gap: 1rem;
 }
 .brand {
 	display: block;
@@ -37,7 +37,7 @@ header { padding: 2rem 1rem 0; background: var(--background); }
 	text-decoration: none;
 }
 .tagline {
-	margin: .55rem 0 0;
+	margin: .35rem 0 0;
 	color: var(--muted);
 	font-family: var(--sans);
 	font-size: .62rem;
@@ -56,10 +56,10 @@ nav a.active {
 	text-decoration: underline;
 	text-underline-offset: .25em;
 }
-.rule { margin-top: 1.25rem; border-top: 1px solid var(--text); }
+.rule { margin-top: 1rem; border-top: 1px solid var(--text); }
 
 @media (max-width: 600px) {
-	header { padding-top: 1.5rem; }
+	header { padding-top: 1rem; }
 	.masthead-top {
 		align-items: flex-start;
 		flex-direction: column;
