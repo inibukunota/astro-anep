@@ -6,11 +6,11 @@ import Footer from '../components/Footer.astro';
 import StructuredData from '../components/StructuredData.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 type Props = CollectionEntry<'blog'>['data'];
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, seoTitle, seoDescription, noIndex, pubDate, updatedDate, heroImage } = Astro.props;
 ---
 <html lang="en">
 <head>
-	<BaseHead title={title} description={description} image={heroImage} type="article" />
+	<BaseHead title={seoTitle || title} description={seoDescription || description} image={heroImage} type="article" noIndex={noIndex} datePublished={pubDate} dateModified={updatedDate} />
 	<StructuredData type="article" title={title} description={description} url={Astro.url} image={heroImage} datePublished={pubDate} dateModified={updatedDate} />
 </head>
 <body>
