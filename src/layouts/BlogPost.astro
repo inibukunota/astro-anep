@@ -7,12 +7,15 @@ import StructuredData from '../components/StructuredData.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
-const { title, description, seoTitle, seoDescription, noIndex, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, metaDescription, seoTitle, seoDescription, noIndex, pubDate, updatedDate, featuredImage, heroImage, author, categories, tags } = Astro.props;
+const resolvedDescription = metaDescription || description || '';
+const resolvedImage = featuredImage || heroImage;
+const resolvedAuthor = author || 'Hanif Azrai';
 ---
 <html lang="en">
 <head>
-	<BaseHead title={seoTitle || title} description={seoDescription || description} image={heroImage} type="article" noIndex={noIndex} datePublished={pubDate} dateModified={updatedDate} />
-	<StructuredData type="article" title={title} description={description} url={Astro.url} image={heroImage} datePublished={pubDate} dateModified={updatedDate} />
+	<BaseHead title={seoTitle || title} description={seoDescription || resolvedDescription} image={resolvedImage} type="article" noIndex={noIndex} datePublished={pubDate} dateModified={updatedDate} />
+	<StructuredData type="article" title={title} description={resolvedDescription} url={Astro.url} image={resolvedImage} datePublished={pubDate} dateModified={updatedDate} author={resolvedAuthor} categories={categories} tags={tags} />
 </head>
 <body>
 	<Header />
@@ -21,10 +24,10 @@ const { title, description, seoTitle, seoDescription, noIndex, pubDate, updatedD
 			<header class="article-header">
 				<p class="kicker">BLOG</p>
 				<h1>{title}</h1>
-				<p class="description">{description}</p>
-				<p class="meta"><FormattedDate date={pubDate} />{updatedDate && <> · Updated <FormattedDate date={updatedDate} /></>}</p>
+				{resolvedDescription && <p class="description">{resolvedDescription}</p>}
+				<p class="meta">{resolvedAuthor} · <FormattedDate date={pubDate} />{updatedDate && <> · Updated <FormattedDate date={updatedDate} /></>}</p>
 			</header>
-			{heroImage && <img class="hero-image" width={1020} height={510} src={heroImage} alt="" />}
+			{resolvedImage && <img class="hero-image" width={1020} height={510} src={resolvedImage} alt="" />}
 			<div class="prose"><slot /></div>
 		</article>
 	</main>
@@ -34,32 +37,12 @@ const { title, description, seoTitle, seoDescription, noIndex, pubDate, updatedD
 <style>
 .article { width: 100%; margin: 0 auto; }
 .article-header { max-width: var(--reading-width); margin-bottom: 1rem; }
-.kicker {
-	margin-bottom: .75rem;
-	color: var(--muted);
-	font-size: .75rem;
-	font-weight: 700;
-	letter-spacing: .14em;
-}
+.kicker { margin-bottom: .75rem; color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .14em; }
 .article-header h1 { font-size: clamp(2.6rem, 7vw, 3rem); }
 .description { margin-top: 1rem; font-size: 1.15rem; color: var(--muted); }
-.meta {
-	margin-top: 1rem;
-	margin-bottom: 0;
-	color: var(--muted);
-	font-size: .78rem;
-	letter-spacing: .04em;
-	text-transform: uppercase;
-}
-.hero-image {
-	width: 100%;
-	max-width: var(--site-width);
-	margin-bottom: 1rem;
-}
+.meta { margin-top: 1rem; margin-bottom: 0; color: var(--muted); font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; }
+.hero-image { width: 100%; max-width: var(--site-width); margin-bottom: 1rem; }
 .prose { color: var(--text); }
 .prose :global(p:first-child) { font-size: 1.05em; }
-
-@media (max-width: 600px) {
-	.article-header { margin-bottom: 1rem; }
-}
+@media (max-width: 600px) { .article-header { margin-bottom: 1rem; } }
 </style>
