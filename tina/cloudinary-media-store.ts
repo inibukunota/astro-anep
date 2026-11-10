@@ -44,7 +44,7 @@ export class CloudinaryMediaStore implements MediaStore {
     if (options.search) params.set("search", options.search);
     if (options.ext?.length) params.set("ext", options.ext.join(","));
     if (options.filesOnly) params.set("filesOnly", "true");
-    const response = await fetch(this.baseUrl + "?" + params.toString());
+    const response = await fetch(this.baseUrl + (params.toString() ? "?" + params.toString() : ""));
     if (!response.ok) throw new Error("Cloudinary media listing failed.");
     return response.json();
   }
