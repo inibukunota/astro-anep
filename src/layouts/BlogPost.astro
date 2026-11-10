@@ -5,16 +5,18 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import StructuredData from '../components/StructuredData.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import { getEntry } from 'astro:content';
 
 type Props = CollectionEntry<'blog'>['data'];
-const { title, description, metaDescription, seoTitle, seoDescription, noIndex, pubDate, updatedDate, featuredImage, heroImage, author, categories, tags } = Astro.props;
-const resolvedDescription = metaDescription || description || '';
-const resolvedImage = featuredImage || heroImage;
-const resolvedAuthor = author || 'Hanif Azrai';
+const { title, metaDescription, pubDate, updatedDate, featuredImage, author, categories, tags } = Astro.props;
+const resolvedDescription = metaDescription || '';
+const resolvedImage = featuredImage;
+const authorEntry = await getEntry(author);
+const resolvedAuthor = authorEntry?.data.name || 'Hanif Azrai';
 ---
 <html lang="en">
 <head>
-	<BaseHead title={seoTitle || title} description={seoDescription || resolvedDescription} image={resolvedImage} type="article" noIndex={noIndex} datePublished={pubDate} dateModified={updatedDate} />
+	<BaseHead title={title} description={resolvedDescription} image={resolvedImage} type="article" datePublished={pubDate} dateModified={updatedDate} />
 	<StructuredData type="article" title={title} description={resolvedDescription} url={Astro.url} image={resolvedImage} datePublished={pubDate} dateModified={updatedDate} author={resolvedAuthor} categories={categories} tags={tags} />
 </head>
 <body>
