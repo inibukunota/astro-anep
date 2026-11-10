@@ -104,18 +104,3 @@ export const GET: APIRoute = async (context) => {
   return json({ items, nextOffset: data.next_cursor });
 };
 
-export const DELETE: APIRoute = async (context) => {
-  const { cloudName, apiKey, apiSecret } = env(context);
-  if (!cloudName || !apiKey || !apiSecret) return json({ message: "Cloudinary environment variables are missing." }, 500);
-
-  const publicId = decodeURIComponent(context.params.publicId || "");
-  if (!publicId) return json({ message: "Missing public ID." }, 400);
-  const timestamp = String(Math.floor(Date.now() / 1000));
-  const params = { public_id: publicId, timestamp };
-  const signature = await sha1(signatureParams(params, apiSecret));
-  const body = new URLSearchParams({ public_id: publicId, timestamp, api_key: apiKey, signature });
-  const response = await fetch("https://api.cloudinary.com/v1_1/" + cloudName + "/image/destroy", { method: "POST", body });
-  const data = await response.json();
-  if (!response.ok || data.result !== "ok") return json({ message: data.error?.message || "Cloudinary delete failed." }, response.status || 500);
-  return json({ ok: true });
-};
