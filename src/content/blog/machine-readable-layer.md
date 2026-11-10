@@ -2,7 +2,7 @@
 title: "Adding a Machine-Readable Layer"
 slug: "machine-readable-layer"
 metaDescription: "How BUKUNOTA added llms.txt and an AI catalog so machine readers and AI agents can discover the site's resources more easily."
-author: "authors/hanif"
+author: "hanif"
 categories: []
 tags: []
 pubDate: 2026-11-09T11:00:00+08:00
