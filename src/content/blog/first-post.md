@@ -3,7 +3,7 @@ title: "First post"
 slug: "first-post"
 metaDescription: "Lorem ipsum dolor sit amet"
 featuredImage: "/blog-placeholder-3.jpg"
-author: "authors/hanif"
+author: "hanif"
 categories: []
 tags: []
 pubDate: "Jul 08 2022"
