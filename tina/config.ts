@@ -13,6 +13,12 @@ export default defineConfig({
   clientId: process.env.TINA_CLIENT_ID || null,
   token: process.env.TINA_TOKEN || null,
   build: { outputFolder: "admin", publicFolder: "public" },
+  media: {
+    loadCustomStore: async () => {
+      const { CloudinaryMediaStore } = await import("./cloudinary-media-store");
+      return CloudinaryMediaStore;
+    },
+  },
   search: {
     tina: {
       indexerToken: process.env.TINA_SEARCH_TOKEN || "",
