@@ -40,7 +40,7 @@ export default defineConfig({
           { type: "string", label: "Title", name: "title", isTitle: true, required: true },
           { type: "string", label: "Slug", name: "slug", description: "URL slug for the article." },
           { type: "string", label: "Meta description", name: "metaDescription", description: "Used for search, excerpts, and Open Graph descriptions." },
-          { type: "string", label: "Featured image", name: "featuredImage", description: "Used as the article and Open Graph image." },
+          { type: "image", label: "Featured image", name: "featuredImage", description: "Used as the article and Open Graph image." },
           { type: "reference", label: "Author", name: "author", collections: ["authors"], required: true },
           { type: "string", label: "Categories", name: "categories", list: true, description: "Broad categories for the article." },
           { type: "string", label: "Tags", name: "tags", list: true, description: "Specific topics, entities, or keywords associated with the article." },
