@@ -1,6 +1,11 @@
 ---
 title: "CMS, Pages and SEO"
-description: "Expanding the site with a cleaner CMS structure, standalone pages, SEO controls and connected structured data."
+slug: "cms-pages-and-seo"
+metaDescription: "Expanding the site with a cleaner CMS structure, standalone pages, SEO controls and connected structured data."
+featuredImage: ""
+author: "authors/hanif"
+categories: []
+tags: []
 pubDate: 2026-11-09T10:00:00+08:00
 updatedDate: 2026-11-09T10:30:00+08:00
 ---
