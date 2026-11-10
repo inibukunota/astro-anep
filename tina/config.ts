@@ -51,28 +51,41 @@ export default defineConfig({
           },
           {
             type: "string",
-            label: "Description",
-            name: "description",
-            required: true,
-            description: "Short search and social description. Aim for a clear, useful summary.",
+            label: "Slug",
+            name: "slug",
+            description: "URL slug for the article. Leave empty to use the filename as the slug.",
           },
           {
             type: "string",
-            label: "SEO title",
-            name: "seoTitle",
-            description: "Optional SEO title. Leave empty to use the article title.",
+            label: "Meta description",
+            name: "metaDescription",
+            description: "Used as the search description, article excerpt, and Open Graph description.",
           },
           {
             type: "string",
-            label: "SEO description",
-            name: "seoDescription",
-            description: "Optional SEO description. Leave empty to use the article description.",
+            label: "Featured image",
+            name: "featuredImage",
+            description: "Path or URL for the article's featured image. Used for the article image and Open Graph image.",
           },
           {
-            type: "boolean",
-            label: "No index",
-            name: "noIndex",
-            description: "Prevent search engines from indexing this article.",
+            type: "string",
+            label: "Author",
+            name: "author",
+            description: "Article author name.",
+          },
+          {
+            type: "string",
+            label: "Categories",
+            name: "categories",
+            list: true,
+            description: "Broad categories for the article.",
+          },
+          {
+            type: "string",
+            label: "Tags",
+            name: "tags",
+            list: true,
+            description: "Specific topics, entities, or keywords associated with the article.",
           },
           {
             type: "datetime",
@@ -91,9 +104,39 @@ export default defineConfig({
           },
           {
             type: "string",
-            label: "Hero image",
+            label: "Description (legacy)",
+            name: "description",
+            description: "Legacy field kept for existing posts. New posts should use Meta description.",
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "string",
+            label: "Hero image (legacy)",
             name: "heroImage",
-            description: "Path or URL for the article hero image.",
+            description: "Legacy field kept for existing posts. New posts should use Featured image.",
+            ui: {
+              component: "hidden",
+            },
+          },
+          {
+            type: "string",
+            label: "SEO title",
+            name: "seoTitle",
+            description: "Optional SEO title. Leave empty to use the article title.",
+          },
+          {
+            type: "string",
+            label: "SEO description",
+            name: "seoDescription",
+            description: "Legacy SEO description. Open Graph metadata now uses Meta description.",
+          },
+          {
+            type: "boolean",
+            label: "No index",
+            name: "noIndex",
+            description: "Prevent search engines from indexing this article.",
           },
           {
             type: "rich-text",
@@ -152,4 +195,5 @@ export default defineConfig({
     ],
   },
 });
+
 // TinaCloud branch registration marker: keep production branch on main.
