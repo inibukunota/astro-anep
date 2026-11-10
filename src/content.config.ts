@@ -1,5 +1,5 @@
 import { glob } from "astro/loaders";
-import { defineCollection } from "astro:content";
+import { defineCollection, reference } from "astro:content";
 import { z } from "astro/zod";
 
 const seoFields = {
@@ -13,16 +13,27 @@ const seoFields = {
 const blog = defineCollection({
   loader: glob({ base: "./src/content/blog", pattern: "**/*.{md,mdx}" }),
   schema: z.object({
-    ...seoFields,
+    title: z.string(),
     slug: z.string().optional(),
     metaDescription: z.string().optional(),
     featuredImage: z.string().optional(),
-    author: z.string().optional(),
-    categories: z.array(z.string()).optional(),
-    tags: z.array(z.string()).optional(),
+    author: reference("authors"),
+    categories: z.array(z.string()).default([]),
+    tags: z.array(z.string()).default([]),
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
-    heroImage: z.string().optional(),
+  }),
+});
+
+const authors = defineCollection({
+  loader: glob({ base: "./src/content/authors", pattern: "**/*.md" }),
+  schema: z.object({
+    username: z.string(),
+    name: z.string(),
+    bio: z.string().optional(),
+    profileImage: z.string().optional(),
+    website: z.string().optional(),
+    socialLinks: z.array(z.string()).default([]),
   }),
 });
 
@@ -31,4 +42,4 @@ const pages = defineCollection({
   schema: z.object(seoFields),
 });
 
-export const collections = { blog, pages };
+export const collections = { blog, authors, pages };
