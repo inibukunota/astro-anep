@@ -1,17 +1,17 @@
 ---
-title: "How I Set Up Cloudinary Image Hosting for TinaCMS"
-slug: "cloudinary-image-hosting-tinacms"
-metaDescription: "A simple guide to connecting Cloudinary with TinaCMS on an Astro website, including the API setup, Cloudflare environment variables and routing fix."
-featuredImage: ""
-author: "hanif"
+title: How I Set Up Cloudinary Image Hosting for TinaCMS
+slug: cloudinary-image-hosting-tinacms
+metaDescription: 'A simple guide to connecting Cloudinary with TinaCMS on an Astro website, including the API setup, Cloudflare environment variables and routing fix.'
+featuredImage: 'https://res.cloudinary.com/h2xupm4j/image/upload/v1794319863/cld-sample-3.jpg'
+author: hanif
 categories:
-  - "Web Development"
+  - Web Development
 tags:
-  - "Cloudinary"
-  - "TinaCMS"
-  - "Astro"
-  - "Cloudflare"
-  - "Image Hosting"
+  - Cloudinary
+  - TinaCMS
+  - Astro
+  - Cloudflare
+  - Image Hosting
 pubDate: 2026-11-10T00:00:00.000Z
 updatedDate: 2026-11-10T00:00:00.000Z
 ---
