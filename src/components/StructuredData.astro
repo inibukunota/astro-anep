@@ -1,11 +1,5 @@
 ---
-interface Item {
-  title: string;
-  url: string;
-  description?: string;
-  image?: string;
-  datePublished?: Date;
-}
+interface Item { title: string; url: string; description?: string; image?: string; datePublished?: Date; }
 interface Props {
   type: 'website' | 'profile' | 'page' | 'collection' | 'article';
   title: string;
@@ -14,50 +8,26 @@ interface Props {
   image?: string;
   datePublished?: Date;
   dateModified?: Date;
+  author?: string;
+  categories?: string[];
+  tags?: string[];
   items?: Item[];
 }
-const { type, title, description, url, image, datePublished, dateModified, items = [] } = Astro.props;
+const { type, title, description, url, image, datePublished, dateModified, author = 'Hanif Azrai', categories = [], tags = [], items = [] } = Astro.props;
 const siteUrl = Astro.site ?? url;
 const personId = new URL('/#person', siteUrl).toString();
 const websiteId = new URL('/#website', siteUrl).toString();
 const pageId = new URL(`${url.pathname}#webpage`, siteUrl).toString();
 const imageUrl = image ? new URL(image, url).toString() : undefined;
 
-const person = {
-  '@type': 'Person',
-  '@id': personId,
-  name: 'Hanif Azrai',
-  url: siteUrl.toString(),
-  sameAs: ['https://github.com/inibukunota'],
-};
-
-const website = {
-  '@type': 'WebSite',
-  '@id': websiteId,
-  url: siteUrl.toString(),
-  name: 'Hanif Azrai',
-  description: 'Hanif Azrai writes about technology, content, SEO, the web, and things he finds interesting.',
-  publisher: { '@id': personId },
-  inLanguage: 'en-MY',
-};
-
-const webPage = {
-  '@type': type === 'profile' ? 'ProfilePage' : type === 'collection' ? 'CollectionPage' : 'WebPage',
-  '@id': pageId,
-  url: url.toString(),
-  name: title,
-  description,
-  isPartOf: { '@id': websiteId },
-  inLanguage: 'en-MY',
-};
-
+const person = { '@type': 'Person', '@id': personId, name: 'Hanif Azrai', url: siteUrl.toString(), sameAs: ['https://github.com/inibukunota'] };
+const website = { '@type': 'WebSite', '@id': websiteId, url: siteUrl.toString(), name: 'Hanif Azrai', description: 'Hanif Azrai writes about technology, content, SEO, the web, and things he finds interesting.', publisher: { '@id': personId }, inLanguage: 'en-MY' };
+const webPage = { '@type': type === 'profile' ? 'ProfilePage' : type === 'collection' ? 'CollectionPage' : 'WebPage', '@id': pageId, url: url.toString(), name: title, description, isPartOf: { '@id': websiteId }, inLanguage: 'en-MY' };
 const graph: Record<string, unknown>[] = [person, website, webPage];
-
 
 if (type === 'profile' || type === 'page' || type === 'collection' || type === 'article') {
   graph.push({
-    '@type': 'BreadcrumbList',
-    '@id': `${url.toString()}#breadcrumb`,
+    '@type': 'BreadcrumbList', '@id': `${url.toString()}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: siteUrl.toString() },
       ...(type === 'article'
@@ -66,37 +36,24 @@ if (type === 'profile' || type === 'page' || type === 'collection' || type === '
     ],
   });
 }
-
 if (type === 'article') {
   graph.push({
-    '@type': 'BlogPosting',
-    '@id': `${url.toString()}#article`,
-    headline: title,
-    description,
-    url: url.toString(),
+    '@type': 'BlogPosting', '@id': `${url.toString()}#article`, headline: title, description, url: url.toString(),
     mainEntityOfPage: { '@id': pageId },
-    author: { '@id': personId },
+    author: { '@type': 'Person', name: author, ...(author === 'Hanif Azrai' ? { '@id': personId } : {}) },
     publisher: { '@id': personId },
-    datePublished: datePublished?.toISOString(),
-    dateModified: (dateModified ?? datePublished)?.toISOString(),
+    datePublished: datePublished?.toISOString(), dateModified: (dateModified ?? datePublished)?.toISOString(),
     ...(imageUrl ? { image: [imageUrl] } : {}),
-    inLanguage: 'en-MY',
-    isPartOf: { '@id': websiteId },
+    ...(categories.length ? { articleSection: categories } : {}),
+    ...(tags.length ? { keywords: tags.join(', ') } : {}),
+    inLanguage: 'en-MY', isPartOf: { '@id': websiteId },
   });
 }
-
 if (type === 'collection') {
   graph.push({
-    '@type': 'ItemList',
-    '@id': `${url.toString()}#itemlist`,
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.title,
-      url: item.url,
-    })),
+    '@type': 'ItemList', '@id': `${url.toString()}#itemlist`,
+    itemListElement: items.map((item, index) => ({ '@type': 'ListItem', position: index + 1, name: item.title, url: item.url })),
   });
 }
-
 ---
 <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph })} />
