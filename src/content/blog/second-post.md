@@ -3,7 +3,7 @@ title: "Second post"
 slug: "second-post"
 metaDescription: "Lorem ipsum dolor sit amet"
 featuredImage: "/blog-placeholder-4.jpg"
-author: "authors/hanif"
+author: "hanif"
 categories: []
 tags: []
 pubDate: "Jul 15 2022"
