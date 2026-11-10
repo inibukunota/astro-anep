@@ -1,10 +1,12 @@
 ---
 title: 'Jompa: Finally, an app that finds a fair meetup spot for everyone'
-description: 'Jompa is a Malaysian-made app that finds fair meetup locations based on everyone’s location, travel time, transport and traffic conditions.'
-seoTitle: 'Jompa: Finally, an app that finds a fair meetup spot for everyone'
-seoDescription: 'Jompa is a Malaysian-made app that finds fair meetup locations based on everyone’s location, travel time, transport and traffic conditions.'
+slug: "jompa-fair-meetup-location-app-malaysia"
+metaDescription: 'Jompa is a Malaysian-made app that finds fair meetup locations based on everyone’s location, travel time, transport and traffic conditions.'
+featuredImage: 'https://bukunota.net/wp-content/uploads/2026/10/261030-bukunota-jompa-pilih-tempat-lepak-adil-malaysia-01-1536x864.webp'
+author: "authors/hanif"
+categories: []
+tags: []
 pubDate: 2026-11-09T09:37:33.478Z
-heroImage: 'https://bukunota.net/wp-content/uploads/2026/10/261030-bukunota-jompa-pilih-tempat-lepak-adil-malaysia-01-1536x864.webp'
 ---
 
 Jompa is a new Malaysian-made app that analyses everyone’s location and estimated travel time before suggesting a meetup point that is fair for everyone.
