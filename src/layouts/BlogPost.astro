@@ -6,6 +6,7 @@ import Footer from '../components/Footer.astro';
 import StructuredData from '../components/StructuredData.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getEntry } from 'astro:content';
+import { getCloudinaryImageUrl } from '../utils/content';
 
 type Props = CollectionEntry<'blog'>['data'];
 const { title, metaDescription, pubDate, updatedDate, featuredImage, author, categories, tags } = Astro.props;
@@ -13,6 +14,7 @@ const resolvedDescription = metaDescription || '';
 const resolvedImage = featuredImage;
 const authorEntry = await getEntry(author);
 const resolvedAuthor = authorEntry?.data.name || 'Hanif Azrai';
+const heroImage = getCloudinaryImageUrl(resolvedImage, { width: 1530, height: 765, crop: 'limit' });
 ---
 <html lang="en">
 <head>
@@ -29,7 +31,7 @@ const resolvedAuthor = authorEntry?.data.name || 'Hanif Azrai';
 				{resolvedDescription && <p class="description">{resolvedDescription}</p>}
 				<p class="meta">{resolvedAuthor} · <FormattedDate date={pubDate} />{updatedDate && <> · Updated <FormattedDate date={updatedDate} /></>}</p>
 			</header>
-			{resolvedImage && <img class="hero-image" width={1020} height={510} src={resolvedImage} alt="" />}
+			{heroImage && <img class="hero-image" width={1020} height={510} src={heroImage} alt="" decoding="async" fetchpriority="high" />}
 			<div class="prose"><slot /></div>
 		</article>
 	</main>

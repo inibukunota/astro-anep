@@ -6,6 +6,7 @@ import StructuredData from '../components/StructuredData.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { getCollection } from 'astro:content';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getPostUrl } from '../utils/content';
 
 const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.pubDate.getTime() - a.data.pubDate.getTime())
@@ -13,8 +14,8 @@ const posts = (await getCollection('blog'))
 
 const items = posts.map((post) => ({
 	title: post.data.title,
-	url: new URL(`/blog/${post.id}/`, Astro.site).toString(),
-	description: post.data.description,
+	url: new URL(getPostUrl(post), Astro.site).toString(),
+	description: post.data.metaDescription || '',
 }));
 ---
 <!doctype html>
@@ -34,10 +35,10 @@ const items = posts.map((post) => ({
 			<ol class="post-list">
 				{posts.map((post) => (
 					<li>
-						<a href={`/blog/${post.id}/`}>
+						<a href={getPostUrl(post)}>
 							<span class="post-content">
 								<strong>{post.data.title}</strong>
-								<span>{post.data.description}</span>
+								<span>{post.data.metaDescription || ''}</span>
 								<time datetime={post.data.pubDate.toISOString()}><FormattedDate date={post.data.pubDate} /></time>
 							</span>
 						</a>

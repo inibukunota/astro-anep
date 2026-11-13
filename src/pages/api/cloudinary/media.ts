@@ -42,9 +42,12 @@ export const POST: APIRoute = async (context) => {
   const form = await context.request.formData();
   const file = form.get("file");
   if (!(file instanceof File)) return json({ message: "No file supplied." }, 400);
+  if (!file.type.startsWith("image/")) return json({ message: "Only image uploads are allowed." }, 415);
+  if (file.size > 10 * 1024 * 1024) return json({ message: "Image exceeds the 10 MB upload limit." }, 413);
 
   const directory = String(form.get("directory") || "");
   const filename = String(form.get("filename") || file.name);
+  if (directory.length > 200 || filename.length > 255) return json({ message: "Invalid media path." }, 400);
   const timestamp = String(Math.floor(Date.now() / 1000));
   const publicId = safePublicId(directory, filename);
   const params = { overwrite: "true", public_id: publicId, timestamp };
@@ -71,15 +74,31 @@ export const GET: APIRoute = async (context) => {
   const url = new URL(context.request.url);
   const directory = url.searchParams.get("directory") || "";
   const search = url.searchParams.get("search") || "";
-  const limit = Math.min(Number(url.searchParams.get("limit") || 36), 100);
+  if (search.length > 100) return json({ message: "Search query is too long." }, 400);
+  const limitValue = Number(url.searchParams.get("limit") || 36);
+  if (!Number.isFinite(limitValue) || limitValue < 1) return json({ message: "Invalid limit." }, 400);
+  const limit = Math.min(Math.floor(limitValue), 100);
   const offset = url.searchParams.get("offset") || "";
   const ext = url.searchParams.get("ext") || "";
 
   const expressionParts = ["resource_type:image"];
   const folder = directory.replace(/^\/+|\/+$/g, "");
-  if (folder) expressionParts.push("folder:" + folder + "/*");
-  if (search) expressionParts.push("filename:*" + search + "*");
-  if (ext) expressionParts.push("format:" + ext.split(",").map((x) => x.replace(/^\./, "")).join(","));
+  if (folder) {
+    if (!/^[a-zA-Z0-9_./-]+$/.test(folder) || folder.includes("..")) {
+      return json({ message: "Invalid directory." }, 400);
+    }
+    expressionParts.push("folder:" + folder + "/*");
+  }
+  if (search) {
+    const safeSearch = search.replace(/[^a-zA-Z0-9._ -]/g, "").trim();
+    if (!safeSearch) return json({ message: "Invalid search query." }, 400);
+    expressionParts.push("filename:*" + safeSearch + "*");
+  }
+  if (ext) {
+    const formats = ext.split(",").map((x) => x.replace(/^\./, "").toLowerCase());
+    if (formats.some((x) => !/^[a-z0-9]+$/.test(x))) return json({ message: "Invalid extension filter." }, 400);
+    expressionParts.push("format:" + formats.join(","));
+  }
 
   const body: Record<string, unknown> = { expression: expressionParts.join(" AND "), max_results: limit };
   if (offset) body.next_cursor = offset;
